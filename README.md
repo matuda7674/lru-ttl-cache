@@ -38,3 +38,10 @@ The trade-off: expiry is lazy. There is no background timer sweeping stale entri
 `size` is the raw count of nodes, including entries that are stale but not yet swept. A stale entry still occupies a slot against `capacity` until it is touched or swept. If you need an exact live count, call `sweepExpired()` first. Re-inserting a key refreshes its TTL and moves it to the most-recently-used end — this is deliberate, since a `set` is normally a signal the value is fresh again.
 
 TTL is inclusive: an entry is stale once `now - insertedAt >= ttl`, so an entry set at time 0 with ttl 50 is expired at time 50, not 51.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+

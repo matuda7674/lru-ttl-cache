@@ -1,6 +1,6 @@
 {
   "name": "lru-ttl-cache",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ttl cache that evicts both stale and least-used entries",
   "type": "module",
   "main": "src/index.js",
